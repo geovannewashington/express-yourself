@@ -7,6 +7,7 @@ function celciusToFah(celcius) {
 }
 
 // Like a default export:
+
 module.exports = {
     generateRandomNumber,
     celciusToFah

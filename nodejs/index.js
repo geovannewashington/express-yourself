@@ -17,7 +17,36 @@ console.log(exports === module.exports);  // true
 // returns whatever the target module assigned to module.exports
 
 // We can export specific properties out of the utils.js' module.exports object using object destructuring
+
 const { generateRandomNumber: foo, celciusToFah: bar } = require('./utils'); // Note: no need for the .js extension here
 
 console.log(foo());  // Generates a random number
 console.log(bar(0)); // Converts 0 celcius to Fahrenheit, which is 32
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// About object destructuring: 
+
+// 1. key based
+const obj = { x: 1, y: 2 };
+const { x, y } = obj;
+console.log(x === obj.x); // true
+console.log(y === obj.y); // true
+
+// 2. You can rename things, kind like 'import as ...'
+const person = { name: 'Alice', age: 23 };
+const { name: firstName, age: years } = person;
+
+// 3. You can even set defaults
+
+const { foo1 = 42, bar1 = "Hello" } = {}; // An empty array, there is neither foo or bar
+console.log(foo1, bar1); // 42 Hello
+
+
+
+
+
+
+
+
+
+
