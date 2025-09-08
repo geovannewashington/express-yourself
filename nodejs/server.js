@@ -16,17 +16,18 @@ const server = http.createServer((req, res) => {
     // res.statusCode defaults to 200 -> ok
     // res.setHeader defaults to undefined -> the browser (or curl) guesses the content type. 
     // But it's good practice to set the header so the client knows exactly what type of content is being sent.
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
+    /* res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain'); */
 
     // Note that req and res are objects related to the response cycle 
 
     // A text responde the the client (browser or the terminal, using curl)
     // res.write('Hello, World!\n'); 
+    /* res.write('<h1>')
     res.write('Hello '); // res.write -> writes chunks of data to the response but doesn't finish it.
     res.write('World'); 
-    res.end('!\n');  // writes optional final data and ends the response.
-
+    res.write('!');  // writes optional final data and ends the response.
+    res.end('</h1>'); */
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // About res.end 
 
@@ -39,6 +40,16 @@ const server = http.createServer((req, res) => {
     
     // So omitting res.end keeps the connection open, expecting more data 
     // This can make the browser hand, the spinning loading icon never stops, and curl never returns
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // The res.writeHead method lets us set the status code and headers at once 
+    // res.writeHead(/* 3 digits status code */, /* { 'Content-Type': 'Whatevere' } */)
+    
+    res.writeHead(500, { 'Content-Type': 'application/json' }); // expects a json 
+    res.end(JSON.stringify({ 
+        message: 'Server Errror',
+        description: 'Something went wrong!'
+    }));
 });
 
 server.listen(PORT, () => {
