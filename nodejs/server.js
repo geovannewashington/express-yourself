@@ -6,7 +6,7 @@
 // its frequently wrapped in higher-level frameworks (like Express) for convinience.
 
 import http from 'http';
-const PORT = 8000;
+const PORT = process.env.PORT; 
 
 const server = http.createServer((req, res) => {
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,5 +53,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`); // Server running on port 8000
+    console.log(`Server running on port ${PORT}`); 
 });
