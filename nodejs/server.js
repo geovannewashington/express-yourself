@@ -53,7 +53,8 @@ const server = http.createServer((req, res) => {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // Simple Routing:
-    try {
+
+    /* try {
         if (req.method === 'GET') {
             // Do something...
             if (req.url === '/') {
@@ -72,6 +73,34 @@ const server = http.createServer((req, res) => {
     } catch (err) {
         res.writeHead(500, { 'Contet-Type': 'text/plain' });
         res.end(err.message + '\n');
+    } */
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Anothery way of handling routes 
+    const routes = {
+        '/': '<h1>Homepage</h1>\n',
+        '/about': '<h1>About</h1>\n',
+        '404': '<h1>Page Not Found!</h1>\n'
+    };
+
+    try {
+        // Only allow GET requests        
+        if (req.method !== 'GET') {
+            throw new Error('Method not alloed!');
+        }
+
+        // All possible pages
+        if (routes[req.url]) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            return res.end(routes[req.url]);
+        } 
+        
+        // Page not found
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        return res.end(routes['404']);
+    } catch (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end(err.message);
     }
 });
 
