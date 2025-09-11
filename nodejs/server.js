@@ -45,11 +45,34 @@ const server = http.createServer((req, res) => {
     // The res.writeHead method lets us set the status code and headers at once 
     // res.writeHead(/* 3 digits status code */, /* { 'Content-Type': 'Whatevere' } */)
     
-    res.writeHead(500, { 'Content-Type': 'application/json' }); // expects a json 
+    /* res.writeHead(500, { 'Content-Type': 'application/json' }); // expects a json 
     res.end(JSON.stringify({ 
         message: 'Server Errror',
         description: 'Something went wrong!'
-    }));
+    })); */
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Simple Routing:
+    try {
+        if (req.method === 'GET') {
+            // Do something...
+            if (req.url === '/') {
+                res.writeHead(200, { 'Contet-Type': 'text/html' });
+                res.end('<h1>Homepage</h1>\n');
+            } else if (req.url === '/about') {
+                res.writeHead(200, { 'Contet-Type': 'text/html' });
+                res.end('<h1>About</h1>\n');
+            } else {
+                res.writeHead(404, { 'Contet-Type': 'text/html' });
+                res.end('<h1>Not Found :(</h1>\n');
+            }
+        } else {
+            throw new Error('Method not allowed!');
+        } 
+    } catch (err) {
+        res.writeHead(500, { 'Contet-Type': 'text/plain' });
+        res.end(err.message + '\n');
+    }
 });
 
 server.listen(PORT, () => {
