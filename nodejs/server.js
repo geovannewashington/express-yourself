@@ -4,11 +4,17 @@
 // it's kind low-level in the sense that unlike frameworks such as Expressjs, we control headers
 // status codes, response bodies manually.
 // its frequently wrapped in higher-level frameworks (like Express) for convinience.
-
-import http from 'http';
 const PORT = process.env.PORT; 
 
-const server = http.createServer((req, res) => {
+import http from 'http';
+import fs from 'fs/promises';
+import url from 'url';
+import path from 'path';
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const server = http.createServer(async (req, res) => {
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // About res.statusCode and res.setHeader 
     
@@ -77,7 +83,7 @@ const server = http.createServer((req, res) => {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // Anothery way of handling routes 
-    const routes = {
+    /* const routes = {
         '/': '<h1>Homepage</h1>\n',
         '/about': '<h1>About</h1>\n',
         '404': '<h1>Page Not Found!</h1>\n'
@@ -101,6 +107,31 @@ const server = http.createServer((req, res) => {
     } catch (err) {
         res.writeHead(500, { 'Content-Type': 'text/plain' });
         res.end(err.message);
+    } */
+    
+    try {
+        if (req.method === 'GET') {
+            // Do something...
+            let filePath; 
+            if (req.url === '/') {
+                filePath = path.join(__dirname, 'public', 'index.html'); 
+            } else if (req.url === '/about') {
+                filePath = path.join(__dirname, 'public', 'about.html'); 
+            } 
+            else {
+                throw new Error('Not Found!'); 
+            }
+            
+            const data = await fs.readFile(filePath);
+            res.writeHead(200, { 'Content-Type': 'text/html'} );
+            res.end(data);
+        } else {
+            throw new Error('Method not allowed!');
+        } 
+
+    } catch (err) {
+        res.writeHead(500, { 'Contet-Type': 'text/plain' });
+        res.end(err.message + '\n');
     }
 });
 
