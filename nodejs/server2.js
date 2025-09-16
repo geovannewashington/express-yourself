@@ -11,6 +11,16 @@ const users = [
 ];
 
 const server = createServer((req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*"); // allow all origins
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    // Handle preflight requests
+    if (req.method === "OPTIONS") {
+      res.writeHead(204);
+      return res.end();
+    }
+
     try {
         if (req.url === '/api/users' && req.method === 'GET') {
             res.writeHead(200, { 'Content-Type': 'application/json' });
