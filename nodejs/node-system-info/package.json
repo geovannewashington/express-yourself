@@ -1,0 +1,11 @@
+{
+  "name": "system-info",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
