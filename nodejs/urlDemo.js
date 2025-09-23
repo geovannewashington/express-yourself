@@ -84,20 +84,3 @@ const base = 'https://example.com';
 const fullURL = new URL(relative, base);
 // console.log(fullURL.toString()); // https://example.com/about?name=tposeprogrammer
 // const fullURL = new URL(relative); // This creates an error!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
