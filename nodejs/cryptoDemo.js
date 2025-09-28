@@ -28,6 +28,48 @@ const data = "Hello World!";
 const hash = crypto.createHash('sha256')    // algorithm: sha256, sha512, md5 (not recommended)
                             .update(data)   // data to hash
                             .digest('hex'); // output format
-console.log(hash);
-// to continue...
-                        
+// console.log(hash);
+
+// 2. Random Values
+// Cryptographically secure random numbers (for toekens, keys, etc)
+// const token = crypto.randomBytes(16).toString('hex');
+// console.log(token);
+
+// createCipheriv & createDecipheriv
+const algorithm = 'aes-256-cbc';
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16); // The number of bytes for iv depends on the algorithm we're using...
+
+// IV stands for Initialization Vector
+// It's main job: make sure that encrypting the same plaintext twice with the same key produces 
+// different ciphertexts
+
+const cipher = crypto.createCipheriv(algorithm, key, iv);
+let encrypted = cipher.update('Hello, this is a secret message', 'utf8', 'hex');
+encrypted += cipher.final('hex');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
