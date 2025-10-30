@@ -61,7 +61,13 @@ let posts = [
 
 // Get all posts
 app.get('/api/posts', (req, res) => {
-    res.json(posts);
+    
+    const limit = parseInt(req.query.limit);
+
+    if (!isNaN(limit) && limit > 0) {
+        return res.json(posts.slice(0, limit));
+    } 
+    return res.json(posts);
 });
 
 // Get specific post filtered by id
