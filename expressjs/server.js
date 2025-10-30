@@ -65,19 +65,23 @@ app.get('/api/posts', (req, res) => {
     const limit = parseInt(req.query.limit);
 
     if (!isNaN(limit) && limit > 0) {
-        return res.json(posts.slice(0, limit));
+        return res.status(200).json(posts.slice(0, limit));
     } 
-    return res.json(posts);
+    return res.res(200).json(posts);
 });
 
 // Get specific post filtered by id
 app.get('/api/posts/:id', (req, res) => {
-    const id = parseInt(req.params.id); 
     // Note that req.params returns an object with every single param, by default they're strings
     // That's why we're converting the id to integer. So we can strictly compare it with the posts ids.
-    res.json(posts.filter(post => post.id === id));
-    
+    const id = parseInt(req.params.id); 
+    const post = posts.find(post => post.id === id);
+
     // if 'id' doesn't exist we could treat it with a 404 page or something...
+    if (!post) {
+        return res.status(404).json({ msg: `A post with the id of ${id} was not found` });
+    }
+    return res.status(200).json(post);
 });
 
 app.listen(PORT, () => { console.log(`Server running on port: ${PORT}`) });
