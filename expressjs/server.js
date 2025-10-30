@@ -59,8 +59,19 @@ let posts = [
     },
 ];
 
+// Get all posts
 app.get('/api/posts', (req, res) => {
     res.json(posts);
+});
+
+// Get specific post filtered by id
+app.get('/api/posts/:id', (req, res) => {
+    const id = parseInt(req.params.id); 
+    // Note that req.params returns an object with every single param, by default they're strings
+    // That's why we're converting the id to integer. So we can strictly compare it with the posts ids.
+    res.json(posts.filter(post => post.id === id));
+    
+    // if 'id' doesn't exist we could treat it with a 404 page or something...
 });
 
 app.listen(PORT, () => { console.log(`Server running on port: ${PORT}`) });
