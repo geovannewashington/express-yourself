@@ -24,7 +24,7 @@
 // CommonJS
 const express = require('express'); 
 const path = require('node:path');
-const PORT = 8000;
+const PORT = process.env.PORT || 8000; // Fallback to 8000
 
 const app = express();
 
@@ -34,7 +34,7 @@ const app = express();
 // just send it directly. No need to run any route logic. This way we don't have to create routes 
 // for every file.
 // --
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 // Now we can load the files that are in public directory:
 // http://localhost:8000/index.html
 // http://localhost:8000/about.html
@@ -43,5 +43,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 // (e.g., http://localhost:8000/ serves index.html without needing the full name).
 // Other files (like about.html) need the full name in the URL
 
+// Fake Hardcoded Database
+let posts = [
+    {
+        id: 1,
+        title: 'Post One'
+    },
+    {
+        id: 2,
+        title: 'Post Two'
+    },
+    {
+        id: 3,
+        title: 'Post Three'
+    },
+];
+
+app.get('/api/posts', (req, res) => {
+    res.json(posts);
+});
+
 app.listen(PORT, () => { console.log(`Server running on port: ${PORT}`) });
-// -> Server running on port 8000
+// -> Assuming the '.env' file is woring: Server running on port 8080
