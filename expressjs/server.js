@@ -1,10 +1,10 @@
 // server.js - entry point
 
-// CommonJS
-const express = require('express'); 
-const path = require('node:path');
+// ES Modules
 const PORT = process.env.PORT || 8000; // Fallback to 8000
-const router = require('./routes/posts');
+import express from 'express';
+import path from 'node:path';
+import router from './routes/posts.js';
 
 const app = express();
 

@@ -1,6 +1,6 @@
 // posts.js
 
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 // Fake Hardcoded Database
@@ -44,4 +44,4 @@ router.get('/:id', (req, res) => {
     return res.status(200).json(post);
 });
 
-module.exports = router;
+export default router;
