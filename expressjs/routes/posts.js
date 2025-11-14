@@ -44,4 +44,13 @@ router.get('/:id', (req, res) => {
     return res.status(200).json(post);
 });
 
+// Create a new post
+router.post('/', (req, res) => {
+    console.log(req.body); 
+    // Note that if we don't use specific request parsers in the server.js file (use the middlewares)
+    // this will log undefined
+    res.status(201).json(posts);
+    // code 201 means the request was successfull AND something was created.
+});
+
 export default router;

@@ -8,6 +8,11 @@ import router from './routes/posts.js';
 
 const app = express();
 
+// Body parser middleware
+// Reminder: app.use() is how you set middlwares in express
+app.use(express.json()); // -> to handle raw json data
+app.use(express.urlencoded()); // -> to handle urlencoded data
+
 // Routes
 app.use('/api/posts', router);
 
