@@ -4,7 +4,7 @@ import express from 'express';
 const router = express.Router();
 
 // Fake Hardcoded Database
-let posts = [
+const posts = [
     {
         id: 1,
         title: 'Post One'
@@ -78,4 +78,16 @@ router.put('/:id', (req, res) => {
     res.status(200).json(posts);
 });
 
+// Delete Post
+router.delete('/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const post = posts.find(post => post.id === id);
+    
+    if (!post) { // post doesn't exist (cannot delete what doesn't exist)
+        return res.status(400).json({msg: `A post with the id of ${id} was not found`});
+    }
+    const index = posts.indexOf(post); 
+    posts.splice(index, 1);
+    res.status(200).json(posts);
+});
 export default router;
