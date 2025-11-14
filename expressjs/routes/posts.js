@@ -61,4 +61,21 @@ router.post('/', (req, res) => {
     res.status(201).json(posts);
 });
 
+// Update post's title
+router.put('/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const post = posts.find(post => post.id === id);
+    
+    if (!post) { // post doesn't exist
+        return res.status(400).json({msg: `A post with the id of ${id} was not found`});
+    }
+
+    post.title = req.body.title;
+    // If the element found is a complex data type (like an object or an array).
+    // It returns a reference, meaning that any changes you do will affect the orignal data structure in-place.
+    //
+    // It returns undefined (a falsy value) when nothing was matched.
+    res.status(200).json(posts);
+});
+
 export default router;
