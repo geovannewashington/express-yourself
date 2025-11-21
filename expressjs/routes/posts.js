@@ -19,6 +19,12 @@ const posts = [
     },
 ];
 
+// A logger middleware
+const logger = (req, res, next) => {
+    // where next is the next function in the call stack, that's why the order of middlewares matter
+    console.log('urmom');
+};
+
 // Get all posts
 router.get('/', (req, res) => {
     
