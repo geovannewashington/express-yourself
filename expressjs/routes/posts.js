@@ -19,12 +19,6 @@ const posts = [
     },
 ];
 
-// A logger middleware
-const logger = (req, res, next) => {
-    // where next is the next function in the call stack, that's why the order of middlewares matter
-    console.log('urmom');
-};
-
 // Get all posts
 router.get('/', (req, res) => {
     
@@ -37,7 +31,7 @@ router.get('/', (req, res) => {
 });
 
 // Get specific post filtered by id
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
     // Note that req.params returns an object with every single param, by default they're strings
     // That's why we're converting the id to integer. So we can strictly compare it with the posts ids.
     const id = parseInt(req.params.id); 
@@ -45,21 +39,24 @@ router.get('/:id', (req, res) => {
 
     // if 'id' doesn't exist we could treat it with a 404 page or something...
     if (!post) {
-        return res.status(404).json({ msg: `A post with the id of ${id} was not found` });
+        const err = new Error(`not found: unable to find a post with the id of ${id}`);
+        err.status = 404; // not found
+        return next(err);
     }
     return res.status(200).json(post);
 });
 
 // Create a new post
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
     const postTitle = req.body.title;
-    
+     
     if (!postTitle) {
-        return res.status(400).json({"msg": "Please include a title"});
-        // code 400 is usually a client error, and error with the data the client sent
+        const err = new Error(`bad request: plase include a title`);
+        err.status = 400;
+        return next(err);
     }
     const newPost = {
-       id : posts.length + 1, // On a real database the id would be set automatically
+       id : parseInt(req.body.id) || posts.length + 1, 
        title: postTitle
     };
 
@@ -68,12 +65,14 @@ router.post('/', (req, res) => {
 });
 
 // Update post's title
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
     const id = parseInt(req.params.id);
     const post = posts.find(post => post.id === id);
     
     if (!post) { // post doesn't exist
-        return res.status(400).json({msg: `A post with the id of ${id} was not found`});
+        const err = new Error(`nout found: unable to found a post with the id of ${id}`);
+        err.status = 404;
+        return next(err);
     }
 
     post.title = req.body.title;
@@ -85,15 +84,18 @@ router.put('/:id', (req, res) => {
 });
 
 // Delete Post
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
     const id = parseInt(req.params.id);
     const post = posts.find(post => post.id === id);
     
     if (!post) { // post doesn't exist (cannot delete what doesn't exist)
-        return res.status(400).json({msg: `A post with the id of ${id} was not found`});
+        const err = new Error(`not found: unable to find a post with the id of ${id}`);
+        err.status = 404;
+        return next(err);
     }
     const index = posts.indexOf(post); 
     posts.splice(index, 1);
     res.status(200).json(posts);
 });
+
 export default router;
