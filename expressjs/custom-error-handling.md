@@ -1,17 +1,42 @@
-# Custom Error Handling in ExpressJS
+# Custom Error Handling in Express.js
 
-By default Express already comes with a default error handler, it sends us back an HTML page saying:
-'Cannot <method> <route>' with a status code of 404 (not found).
+Express includes a built-in default error handler. When a route is not matched, it responds with an
+HTML page like:
 
-The error handler is another piece of middleware.
+```plaintext
+Cannot <method> <route>
+```
+
+accompanied by a 404 Not Found status.
+
+Error handling in Express works through dedicated middleware.
 
 ## Defining an Error Handler Middleware
 
-It's distinguished by having four arguments: `err, req, res, next`
-Where the err argument holds the error object that was passed to next();
+An error-handling middleware function is identified by having four parameters:
+`(err, req, res, next)`
+The err parameter contains the error object passed to next().
 
-## Conditions for firing an error handler middleware:
+## When the Error Handler Is Triggered
 
-When a regular middleware or route handler encounters an error and pass it to next().
+An error handler runs when:
 
-Note that it's good practice to always insert a next function argument in the handler.
+- Any middleware or route handler encounters an error and calls next(err).
+- A thrown exception inside an async handler is not caught (if using Express 5+ or express-async-errors).
+
+It's good practice to include the next parameter in handlers, even if not used, so you can pass errors
+down the middleware chain when needed.
+
+## Summary of HTTP Status Codes Used
+
+- 400 Bad Request — Use when the client fails to provide required data.
+- 404 Not Found — Use when a requested resource does not exist.
+- 500 Internal Server Error — General, unexpected server-side error.
+
+## Useful cURL Trick
+
+Use -w or --write-out to format output and display the HTTP status code:
+
+```bash
+curl "http://localhost/8000/api/posts/" -x " status code: %{htt_code\n}"
+```
