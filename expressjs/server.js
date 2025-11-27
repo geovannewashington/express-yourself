@@ -4,6 +4,8 @@
 const PORT = process.env.PORT || 8000; // Fallback to 8000
 import express from 'express';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url'
+
 import router from './routes/posts.js';
 import logger from './middleware/logger.js';
 import errorHandler from './middleware/error.js';
@@ -18,6 +20,14 @@ app.use(express.urlencoded()); // -> to handle urlencoded data
 
 // Logger middleware
 app.use(logger); // Since we're applying it before all the routes, it's application level
+
+// define __filname and __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+console.log(__dirname);
+
+// Setup static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/api/posts', router);
