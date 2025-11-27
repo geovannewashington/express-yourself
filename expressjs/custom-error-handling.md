@@ -35,7 +35,8 @@ down the middleware chain when needed.
 
 ## Useful cURL Trick
 
-Use -w or --write-out to format output and display the HTTP status code:
+We can use the -w | --write-out option to format the output and see the http status code
+e.g.:
 
 ```bash
 curl "http://localhost/8000/api/posts/" -x " status code: %{htt_code\n}"

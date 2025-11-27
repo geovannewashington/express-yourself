@@ -7,6 +7,7 @@ import path from 'node:path';
 import router from './routes/posts.js';
 import logger from './middleware/logger.js';
 import errorHandler from './middleware/error.js';
+import notFound from './middleware/notFound.js';
 
 const app = express();
 
@@ -20,6 +21,9 @@ app.use(logger); // Since we're applying it before all the routes, it's applicat
 
 // Routes
 app.use('/api/posts', router);
+
+// Generic error handler
+app.use(notFound);
 
 // Error Handler (should go below the routes)
 app.use(errorHandler);
