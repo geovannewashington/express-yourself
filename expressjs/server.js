@@ -8,6 +8,7 @@ import router from './routes/posts.js';
 import logger from './middleware/logger.js';
 import errorHandler from './middleware/error.js';
 import notFound from './middleware/notFound.js';
+import colors from 'colors';
 
 const app = express();
 
