@@ -1,0 +1,25 @@
+<%- include('partials/head.ejs')%>
+
+<body>
+    <section id='main-section'>
+        <h1>👋 Hello, <%= user %></h1>
+
+        <hr>
+        <h2> Update Info: </h2>       
+        <input type="text" id="input-field" placeholder="Insert the name of a hobby to delete it">
+        <div class="buttons">
+            <button type="button">Clear All</button>
+            <button type="button">Delete Hobby</button>
+            <button type="button">Add Hobby</button>
+        </div>
+        
+        <h2>Your Hobbies:</h2>
+        <ul>
+            <% hobbies.forEach(hobby => { %> 
+            <li> <%= hobby %> </li>
+            <% }); %>
+        </ul>       
+    </section> 
+</body>
+
+<%- include('partials/footer.ejs')%>
