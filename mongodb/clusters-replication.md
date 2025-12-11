@@ -1,4 +1,4 @@
-# Clusers and Replication
+# Clusters and Replication
 
 In mongodb, a cluster consists of three databases.
 

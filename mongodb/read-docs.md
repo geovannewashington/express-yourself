@@ -3,7 +3,7 @@
 We can filter a field in the mongodb CLI by using the following syntax:
 
 We need to be on the namespace.
-And then: <collection_name>.find(), if we don't provide a key, it will show us a default limited amount of
+And then: db.<collection_name>.find(), if we don't provide a key, it will show us a default limited amount of
 entries.
 
 And if we specify a key, we will get the result...
@@ -15,7 +15,7 @@ We can use the .limit method to specify a specific number of entries that should
 `format`:
 db.<collection_name>.find().limit(<number_of_files>)
 
-The .filter() method can receive a second argument, which a config object, this way we can limit the amount
+The .find() method can receive a second argument, which a config object, this way we can limit the amount
 of entries from a document only to the fields we care about.
 
 `format`:

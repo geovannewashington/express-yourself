@@ -2,7 +2,7 @@
 
 Example:
 
-db.<collection_name>.update({name: "Alice"}, {$set: {name: "Bob"}})
+db.<collection_name>.updateOne({name: "Alice"}, {$set: {name: "Bob"}})
 
 ## About MongoDB Operators:
 
