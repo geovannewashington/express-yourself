@@ -1,2 +1,2 @@
 # express-yourself
-A playground for learning and experimenting with Node.js, Express, MongoDB, and related backend concepts.
+ A playground for learning the MERN (MongoDB, ExpressJS, ReactJS, NodeJS) stack.
